@@ -1,6 +1,6 @@
 package com.example.testanastasiabelaia
 
-import android.content.pm.ActivityInfo
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.example.testanastasiabelaia.databinding.LoadingFragmentBinding
 import com.example.testanastasiabelaia.play.PlayFragment
 
@@ -23,7 +22,12 @@ class LoadingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getShowGame()
+        viewModel.getShowGame(
+            requireContext().getSharedPreferences(
+                "default",
+                Context.MODE_PRIVATE
+            )
+        )
     }
 
     override fun onCreateView(
@@ -43,12 +47,10 @@ class LoadingFragment : Fragment() {
                     requireActivity()
                         .supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.loading_fragment,PlayFragment())
+                        .replace(R.id.loading_fragment, PlayFragment())
                         .commit()
-                    Log.d("LOADING", "Showing game")
                 }
                 LoadingResult.SHOW_WEB_VIEW -> {
-                    Log.d("LOADING", "Showing WebView")
                     val url = "https://www.reddit.com/"
                     CustomTabsIntent.Builder()
                         .build()
@@ -61,7 +63,7 @@ class LoadingFragment : Fragment() {
         }
 
         viewModel.loading.observe(viewLifecycleOwner) {
-            if (it == true) {
+            if (it) {
                 binding.progress.visibility = View.VISIBLE
             } else {
                 binding.progress.visibility = View.GONE

@@ -1,5 +1,6 @@
 package com.example.testanastasiabelaia
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,25 +13,21 @@ class GameViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     var showGame: MutableLiveData<LoadingResult> = MutableLiveData(LoadingResult.WAITING)
     val loading = MutableLiveData<Boolean>()
-    var job: Job? = null
+    private var job: Job? = null
 
-    fun getShowGame() {
+    fun getShowGame(preferences: SharedPreferences) {
         val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             onError("Ошибка запроса: ${throwable.localizedMessage}")
         }
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = GameRepository.getShowGame()
+            val result = GameRepository.getShowGame(preferences)
             withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    if (response.body()?.args?.key == "showGame") {
-                        showGame.postValue(LoadingResult.SHOW_GAME)
-                    } else {
-                        showGame.postValue(LoadingResult.SHOW_WEB_VIEW)
-                    }
-                    loading.value = false
-                } else {
-                    onError(response.message())
+                when(result){
+                    LoadingResult.SHOW_GAME,LoadingResult.SHOW_WEB_VIEW -> showGame.postValue(result)
+                    LoadingResult.ERROR-> errorMessage.postValue("Error in getting data. Check logs for more info.")
+                    else -> {}
                 }
+                loading.value = false
             }
         }
     }
