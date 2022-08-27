@@ -38,6 +38,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/clicksCatcher"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/first_column"
+        app:layout_constraintBottom_toBottomOf="@id/first_column"
+        app:layout_constraintStart_toStartOf="@id/first_column"
+        app:layout_constraintEnd_toEndOf="@id/third_column"/>
+    <ImageView
         android:id="@+id/slot_machine"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

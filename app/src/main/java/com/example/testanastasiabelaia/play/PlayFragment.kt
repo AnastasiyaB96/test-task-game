@@ -42,6 +42,7 @@ class PlayFragment : Fragment() {
         setupRecyclerView(binding.firstColumn)
         setupRecyclerView(binding.secondColumn)
         setupRecyclerView(binding.thirdColumn)
+        binding.clicksCatcher.setOnTouchListener { _, _ -> true }
         binding.spinButton.setOnClickListener {
             val player = MediaPlayer.create(requireContext(), R.raw.spin_sound)
             player.start()
