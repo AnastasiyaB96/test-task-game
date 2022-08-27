@@ -45,14 +45,14 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <ImageView
-        android:id="@+id/button_start"
+    <com.example.testanastasiabelaia.views.PulsatingImageView
+        android:id="@+id/spin_button"
         android:background="@drawable/img_button"
         android:layout_width="117dp"
         android:layout_height="27dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="65dp"
+        android:layout_marginEnd="55dp"
         android:layout_marginBottom="7dp"/>
 
 

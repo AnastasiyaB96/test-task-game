@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testanastasiabelaia.R
 
-class PlayAdapter(val listImage: List<Int>) : RecyclerView.Adapter<PlayAdapter.PlayViewHolder>() {
+class PlayAdapter(private val listImage: List<Int>) : RecyclerView.Adapter<PlayAdapter.PlayViewHolder>() {
     class PlayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val image: ImageView = view.findViewById(R.id.item_background)
+        private val image: ImageView = view.findViewById(R.id.item_background)
 
         fun bind(idImage: Int) {
-            image.background = image.context.resources.getDrawable(idImage)
+            image.background = ResourcesCompat.getDrawable(image.resources, idImage, null)
         }
     }
 
@@ -23,7 +24,7 @@ class PlayAdapter(val listImage: List<Int>) : RecyclerView.Adapter<PlayAdapter.P
     }
 
     override fun onBindViewHolder(holder: PlayViewHolder, position: Int) {
-        holder.bind(listImage[position%listImage.size])
+        holder.bind(listImage[position % listImage.size])
     }
 
     override fun getItemCount(): Int {
