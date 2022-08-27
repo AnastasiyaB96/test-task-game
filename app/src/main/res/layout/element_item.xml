@@ -5,7 +5,7 @@
 
     <ImageView
         android:id="@+id/item_background"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_width="160dp"
+        android:layout_height="160dp"/>
 
 </FrameLayout>

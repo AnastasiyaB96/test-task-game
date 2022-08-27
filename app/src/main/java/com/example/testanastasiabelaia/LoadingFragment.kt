@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import com.example.testanastasiabelaia.databinding.LoadingFragmentBinding
+import com.example.testanastasiabelaia.play.PlayFragment
 
 class LoadingFragment : Fragment() {
     val viewModel: GameViewModel by viewModels()
@@ -39,6 +40,11 @@ class LoadingFragment : Fragment() {
         viewModel.showGame.observe(viewLifecycleOwner) {
             when (it) {
                 LoadingResult.SHOW_GAME -> {
+                    requireActivity()
+                        .supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.loading_fragment,PlayFragment())
+                        .commit()
                     Log.d("LOADING", "Showing game")
                 }
                 LoadingResult.SHOW_WEB_VIEW -> {

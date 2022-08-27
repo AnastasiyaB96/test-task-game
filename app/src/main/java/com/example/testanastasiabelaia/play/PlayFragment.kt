@@ -30,17 +30,26 @@ class PlayFragment : Fragment() {
         setupRecyclerView(binding.secondColumn)
         setupRecyclerView(binding.thirdColumn)
         var currentPosition = 0
-        binding.root.setOnClickListener {
-            currentPosition+=50
+        binding.buttonStart.setOnClickListener {
+            currentPosition += 50
 
-            binding.firstColumn.scrollTo(currentPosition+(1..10).random())
-            binding.secondColumn.scrollTo(currentPosition+(15..25).random())
-            binding.thirdColumn.scrollTo(currentPosition+(30..40).random())
+            binding.firstColumn.scrollTo(currentPosition + (1..10).random())
+            binding.secondColumn.scrollTo(currentPosition + (15..25).random())
+            binding.thirdColumn.scrollTo(currentPosition + (30..40).random())
         }
     }
 
-    fun setupRecyclerView(recycler: RecyclerView){
-        val adapter = PlayAdapter(listOf(R.drawable.black, R.drawable.red, R.drawable.blue))
+    private fun setupRecyclerView(recycler: RecyclerView) {
+        val adapter = PlayAdapter(
+            listOf(
+                R.drawable.heart_img,
+                R.drawable.bubna_img,
+                R.drawable.clever_img,
+                R.drawable.tref_img,
+                R.drawable.horseshoe_img,
+                R.drawable.star_img
+            )
+        )
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(requireContext())
     }
