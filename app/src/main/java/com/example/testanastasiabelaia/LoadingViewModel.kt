@@ -1,15 +1,12 @@
 package com.example.testanastasiabelaia
 
 import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.testanastasiabelaia.data.GameRepository
-import com.example.testanastasiabelaia.models.ResponseModel
 import kotlinx.coroutines.*
-import retrofit2.Response
 
-class GameViewModel : ViewModel() {
+class LoadingViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     var showGame: MutableLiveData<LoadingResult> = MutableLiveData(LoadingResult.WAITING)
     val loading = MutableLiveData<Boolean>()

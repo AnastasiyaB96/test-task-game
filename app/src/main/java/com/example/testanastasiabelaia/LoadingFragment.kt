@@ -1,21 +1,20 @@
 package com.example.testanastasiabelaia
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.testanastasiabelaia.databinding.LoadingFragmentBinding
 import com.example.testanastasiabelaia.play.PlayFragment
 
+
 class LoadingFragment : Fragment() {
-    val viewModel: GameViewModel by viewModels()
+    private val viewModel: LoadingViewModel by viewModels()
 
     private var _binding: LoadingFragmentBinding? = null
     private val binding get() = _binding!!
@@ -41,6 +40,7 @@ class LoadingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupWebView()
         viewModel.showGame.observe(viewLifecycleOwner) {
             when (it) {
                 LoadingResult.SHOW_GAME -> {
@@ -51,10 +51,7 @@ class LoadingFragment : Fragment() {
                         .commit()
                 }
                 LoadingResult.SHOW_WEB_VIEW -> {
-                    val url = "https://www.reddit.com/"
-                    CustomTabsIntent.Builder()
-                        .build()
-                        .launchUrl(requireContext(), Uri.parse(url))
+                    binding.webView.visibility = View.VISIBLE
                 }
                 else -> {
                     Log.d("LOADING", "Waiting")
@@ -73,5 +70,10 @@ class LoadingFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun setupWebView() {
+        binding.webView.loadUrl("https://www.reddit.com/")
+        binding.webView.visibility = View.GONE
     }
 }
